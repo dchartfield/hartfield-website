@@ -64,10 +64,6 @@
         <dl class="contact">
           <dt>Company</dt>
           <dd>{{LEGAL_NAME}}</dd>
-          <dt>Address</dt>
-          <dd>{{BUSINESS_ADDRESS}}</dd>
-          <dt>Phone</dt>
-          <dd><a href="tel:{{PHONE_DIGITS}}">{{PHONE}}</a></dd>
           <dt>Email</dt>
           <dd><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></dd>
         </dl>
@@ -79,7 +75,7 @@
     <div class="wrap">
       <div>
         &copy; <span data-year>2026</span> {{LEGAL_NAME}}. All rights reserved.
-        <address>{{BUSINESS_ADDRESS}} &middot; {{PHONE}} &middot; {{EMAIL}}</address>
+        <address><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></address>
       </div>
       <nav aria-label="Legal">
         <a href="privacy.html">Privacy Policy</a>

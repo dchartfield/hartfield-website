@@ -32,15 +32,10 @@ esac
 # shellcheck source=config.env
 set -a; source "$CONFIG"; set +a
 
-# Digits-only phone for tel: links, e.g. (512) 555-0100 -> +15125550100
-digits="$(printf '%s' "${PHONE:-}" | tr -cd '0-9')"
-if [[ ${#digits} -eq 10 ]]; then PHONE_DIGITS="+1$digits"; else PHONE_DIGITS="+$digits"; fi
-export PHONE_DIGITS
-
 # Refuse to publish unfinished business details: Twilio rejects sites with
 # placeholder or missing contact information.
 missing=()
-for var in LEGAL_NAME STATE_OF_FORMATION BUSINESS_ADDRESS PHONE EMAIL DOMAIN EFFECTIVE_DATE; do
+for var in LEGAL_NAME STATE_OF_FORMATION EMAIL DOMAIN EFFECTIVE_DATE; do
   val="${!var:-}"
   if [[ -z "$val" || "$val" == TODO* ]]; then missing+=("$var"); fi
 done
