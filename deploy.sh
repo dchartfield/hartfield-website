@@ -4,6 +4,8 @@
 #   ./deploy.sh              build and upload
 #   ./deploy.sh --dry-run    build and show what would change, upload nothing
 #   ./deploy.sh --build-only build into ./dist so you can preview locally
+#   ./deploy.sh --build      build into ./dist, failing if config.env has TODOs
+#                            (used by the GitHub Pages workflow)
 #
 # Settings come from config.env next to this script. Each {{NAME}} placeholder
 # in site/*.html is replaced with the matching value from config.env.
@@ -20,8 +22,9 @@ MODE="deploy"
 case "${1:-}" in
   --dry-run)    MODE="dry-run" ;;
   --build-only) MODE="build" ;;
+  --build)      MODE="build-strict" ;;
   "")           ;;
-  -h|--help)    sed -n '2,11p' "$0"; exit 0 ;;
+  -h|--help)    sed -n '2,13p' "$0"; exit 0 ;;
   *)            echo "Unknown option: $1" >&2; exit 2 ;;
 esac
 
@@ -71,6 +74,7 @@ if [[ "$MODE" == "build" ]]; then
   echo "Preview with:  (cd \"$DIST\" && python3 -m http.server 8000)"
   exit 0
 fi
+[[ "$MODE" == "build-strict" ]] && exit 0
 
 # --- Upload --------------------------------------------------------------
 command -v aws >/dev/null || { echo "aws CLI not found. Install it: brew install awscli" >&2; exit 1; }
